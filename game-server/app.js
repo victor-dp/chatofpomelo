@@ -1,5 +1,7 @@
 var pomelo = require('pomelo');
 var routeUtil = require('./app/util/routeUtil');
+var abuseFilter = require('./app/servers/chat/filter/abuseFilter');
+
 /**
  * Init app for client.
  */
@@ -22,6 +24,10 @@ app.configure('production|development', function() {
 	});
 	// filter configures
 	app.filter(pomelo.timeout());
+});
+
+app.configure('production|development', 'chat', function() {
+	app.filter(abuseFilter());
 });
 
 // start app
